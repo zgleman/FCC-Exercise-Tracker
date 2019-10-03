@@ -43,6 +43,22 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
+app.post('api/exercise/new-user', function(req, res){
+  var createAndSaveUs = function(done) {
+  var John = new Person({
+  name: "John",
+  age: 47,
+  favoriteFoods : ["tacos", "MacNCheese"]
+});
+John.save(function(err, data){
+  if (err) return done(err);
+  
+  done(null, data);
+
+})};
+  res.json({data})
+});
+
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
