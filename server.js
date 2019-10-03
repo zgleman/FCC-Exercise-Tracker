@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const cors = require('cors')
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose', {useNewUrlParser: true})
 mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
 
 app.use(cors())
@@ -42,21 +42,11 @@ app.use((err, req, res, next) => {
   res.status(errCode).type('txt')
     .send(errMessage)
 })
-
+const User = mongoose.model('User', {name: String});
 app.post('api/exercise/new-user', function(req, res){
-  var createAndSaveUs = function(done) {
-  var John = new Person({
-  name: "John",
-  age: 47,
-  favoriteFoods : ["tacos", "MacNCheese"]
-});
-John.save(function(err, data){
-  if (err) return done(err);
+  res.
   
-  done(null, data);
-
-})};
-  res.json({data})
+  
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
