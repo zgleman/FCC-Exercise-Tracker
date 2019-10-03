@@ -19,6 +19,25 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
+const User = mongoose.model('User', {name: String});
+
+app.post('/api/exercise/new-user', function(req, res){
+  
+  var newUser = new User({ name: req.body.username });
+  console.log(newUser);                        
+  newUser.save(function(err){
+  if (err) return (err);
+  });
+  
+  res.json({newUser});
+});
+
+
+
+
+
+
+
 
 // Not found middleware
 app.use((req, res, next) => {
@@ -43,19 +62,7 @@ app.use((err, req, res, next) => {
   res.status(errCode).type('txt')
     .send(errMessage)
 })
-const User = mongoose.model('User', {name: String});
 
-app.post('/api/exercise/new-user', function(req, res){
-  var createAndSaveUser = function(done) {
-  var newUser = new User({ name: req.body });
-                          
-  newUser.save(function(err, data){
-  if (err) return done(err);
-  
-  done(null, data);
-
-})};
-});
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
