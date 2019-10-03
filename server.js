@@ -25,16 +25,21 @@ const User = mongoose.model('User', { _id: {
 }, name: String});
 
 app.post('/api/exercise/new-user', function(req, res){
-  if (User.exists({name: req.body.username}) == true){
-    return "Username already taken";
-  } else {
+  User.count({name: req.body.username}, function(err, count){
+    if (err) return (err);
+    if (count >= 1) {
+      console.log("taken");
+      res.json({error: "Username already taken"});
+    } else if count
+  });
+  
   var newUser = new User({ name: req.body.username });
                    
   newUser.save(function(err){
   if (err) return (err);
   });
   res.json({newUser});
-}});
+});
 
 
 
