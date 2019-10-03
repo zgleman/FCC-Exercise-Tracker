@@ -27,19 +27,24 @@ const User = mongoose.model('User', { _id: {
 app.post('/api/exercise/new-user', function(req, res){
   User.count({name: req.body.username}, function(err, count){
     if (err) return (err);
-    if (count >= 1) {
-      console.log("taken");
+    if (count == 0) {
+      var newUser = new User({ name: req.body.username });        
+      newUser.save(function(err){
+         if (err) return (err);
+      });
+      res.json({newUser});
+      } else if (count >= 1) {
       res.json({error: "Username already taken"});
-    } else if count
-  });
+    }}
+  )}); 
+
+app.get('/api/exercise/users', function(req, res){
+  return User.find({name: /.+/});
   
-  var newUser = new User({ name: req.body.username });
-                   
-  newUser.save(function(err){
-  if (err) return (err);
-  });
-  res.json({newUser});
 });
+  
+  
+
 
 
 
