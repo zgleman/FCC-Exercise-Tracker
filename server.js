@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-
+const shortid = require('shortid');
 const cors = require('cors')
 
 const mongoose = require('mongoose', {useNewUrlParser: true})
@@ -19,18 +19,22 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
-const User = mongoose.model('User', {name: String});
+const User = mongoose.model('User', { _id: {
+  'type': String,
+  'default': shortid.generate
+}, name: String});
 
 app.post('/api/exercise/new-user', function(req, res){
-  
+  if (User.exists({name: req.body.username}) == true){
+    return "Username already taken";
+  } else {
   var newUser = new User({ name: req.body.username });
-  console.log(newUser);                        
+                   
   newUser.save(function(err){
   if (err) return (err);
   });
-  
   res.json({newUser});
-});
+}});
 
 
 
