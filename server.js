@@ -46,8 +46,15 @@ app.get('/api/exercise/users', function(req, res){
   }); 
 });
   
+app.post('/api/exercise/add', function(req, res){
   
-
+});
+  
+app.get('/api/exercise/deleteAllUsers', function(req, res){
+  User.deleteMany({}, function(err){
+    if (err) return (err);
+  })
+});
 
 
 
