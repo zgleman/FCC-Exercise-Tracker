@@ -39,8 +39,11 @@ app.post('/api/exercise/new-user', function(req, res){
   )}); 
 
 app.get('/api/exercise/users', function(req, res){
-  return User.find({name: /.+/});
-  
+  User.find({}, function(err, data){
+    if (err) return (err);
+    console.log(data);
+    res.send(data);
+  }); 
 });
   
   
