@@ -47,7 +47,9 @@ app.get('/api/exercise/users', function(req, res){
 });
   
 app.post('/api/exercise/add', function(req, res){
-  
+  User.findByIdAndUpdate(req.body.userId, {exercise: [req.body.description, req.body.duration, req.body.date == undefined ? ]},function(err){
+    
+  })
 });
   
 app.get('/api/exercise/deleteAllUsers', function(req, res){
