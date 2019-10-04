@@ -20,9 +20,10 @@ app.get('/', (req, res) => {
 });
 
 const User = mongoose.model('User', { _id: {
-  'type': String,
-  'default': shortid.generate
-}, name: String});
+                                            'type': String,
+                                            'default': shortid.generate}, 
+                                     name: String,
+                                     exercise:[]});
 
 app.post('/api/exercise/new-user', function(req, res){
   User.count({name: req.body.username}, function(err, count){
@@ -49,11 +50,14 @@ app.get('/api/exercise/users', function(req, res){
 app.post('/api/exercise/add', function(req, res){
   User.findById(req.body.userId, function(err, data){
     if (err) return "Error updating user";
-    var newExercise = {Description: req.body.description, Duration: req.body.duration, Date: (req.body.date == undefined ? new Date: req.body.date)};
-    data.exercise
-    return "Exercise added";
+    var newExercise = {Description: req.body.description, Duration: req.body.duration, Date: (req.body.date == "" ? new Date: req.body.date)};
+    data.exercise.push(newExercise);
+    data.save();
+    res.json({data});
   })
 });
+
+app.get('/api')
   
 app.get('/api/exercise/deleteAllUsers', function(req, res){
   User.deleteMany({}, function(err){
