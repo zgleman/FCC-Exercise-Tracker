@@ -67,9 +67,8 @@ app.get('/api/exercise/log?', function(req, res){
       console.log(typeof req.query.from, typeof req.query.to, typeof req.query.limit)
       console.log(typeof req.query.from !== undefined, typeof req.query.to !== undefined, typeof req.query.limit !== undefined)
       var log = data.exercise;
-      console.log(log);
-      req.query.from !== undefined ? log = log.filter((d)=> d.date <= new Date(req.query.from)): null;
-      req.query.to !== undefined ? log = log.filter((d)=> d.date >= new Date(req.query.to)): null;
+      req.query.from !== undefined ? log = log.filter((d)=> d.Date >= new Date(req.query.from)): null;
+      req.query.to !== undefined ? log = log.filter((d)=> d.Date <= new Date(req.query.to)): null;
       req.query.limit !== undefined ? log = log.slice(0, req.query.limit): null;
       res.json({name: data.name, exercise: log})
     }
