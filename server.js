@@ -50,7 +50,7 @@ app.get('/api/exercise/users', function(req, res){
 app.post('/api/exercise/add', function(req, res){
   User.findById(req.body.userId, function(err, data){
     if (err) return "Error updating user";
-    var newExercise = {Description: req.body.description, Duration: req.body.duration, Date: (req.body.date == "" ? new Date: req.body.date)};
+    var newExercise = {Description: req.body.description, Duration: req.body.duration, Date: (req.body.date == "" ? new Date: new Date(req.body.date))};
     data.exercise.push(newExercise);
     data.save();
     res.json({data});
@@ -63,10 +63,12 @@ app.get('/api/exercise/log?', function(req, res){
     if (data == null) {
       res.json({error: "User not found"});
     } else {
-      var log = data.exercise.filter(function (d) {
-        if (typeof req.query.)
-      });
-      res.json({name: data.name, exercise: data.exercise})
+      var log = data.exercise;
+      typeof req.query.from !== undefined ? log.filter((d)=> d.date >= new Date(req.query.from)): 
+      typeof req.query.to !== undefined ? log.filter((d)=> d.date <= new Date(req.query.to)): 
+      typeof req.query.limit !== undefined ? log.slice(0, req.query.limit): null;
+      
+      res.json({name: data.name, exercise: log})
     }
   });
 });
