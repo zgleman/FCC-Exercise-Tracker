@@ -54,10 +54,15 @@ app.post('/api/exercise/add', function(req, res){
     data.exercise.push(newExercise);
     data.save();
     res.json({data});
-  })
+  });
 });
 
-app.get('/api')
+app.get('/api/exercise/log/:userId', function(req, res){
+  User.findById(req.query.userId, function(err, data){
+    if (err) return "User Not Found";
+    
+  });
+});
   
 app.get('/api/exercise/deleteAllUsers', function(req, res){
   User.deleteMany({}, function(err){
