@@ -63,15 +63,14 @@ app.get('/api/exercise/log?', function(req, res){
     if (data == null) {
       res.json({error: "User not found"});
     } else {
-      var fromDate = new Date(req.query.from);
-      var toDate = new Date(req.query.to);
-      var limit = req.query.limit;
-      console.log(fromDate, toDate, limit);
+      console.log(req.query.from, req.query.to, req.query.limit)
+      console.log(typeof req.query.from, typeof req.query.to, typeof req.query.limit)
+      console.log(typeof req.query.from !== undefined, typeof req.query.to !== undefined, typeof req.query.limit !== undefined)
       var log = data.exercise;
-      console.log(fromDate instanceof Date)
-      fromDate instanceof Date ? log.filter((d)=> d.date >= fromDate): null;
-      toDate instanceof Date ? log.filter((d)=> d.date <= toDate): null;
-      typeof limit !== undefined ? log.slice(0, limit): null;
+      console.log(log);
+      req.query.from !== undefined ? log = log.filter((d)=> d.date <= new Date(req.query.from)): null;
+      req.query.to !== undefined ? log = log.filter((d)=> d.date >= new Date(req.query.to)): null;
+      req.query.limit !== undefined ? log = log.slice(0, req.query.limit): null;
       res.json({name: data.name, exercise: log})
     }
   });
