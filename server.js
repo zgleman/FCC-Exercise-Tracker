@@ -64,10 +64,9 @@ app.get('/api/exercise/log?', function(req, res){
       res.json({error: "User not found"});
     } else {
       var log = data.exercise;
-      typeof req.query.from !== undefined ? log.filter((d)=> d.date >= new Date(req.query.from)): 
-      typeof req.query.to !== undefined ? log.filter((d)=> d.date <= new Date(req.query.to)): 
+      typeof req.query.from !== undefined ? log.filter((d)=> d.date >= new Date(req.query.from)): null;
+      typeof req.query.to !== undefined ? log.filter((d)=> d.date <= new Date(req.query.to)): null;
       typeof req.query.limit !== undefined ? log.slice(0, req.query.limit): null;
-      
       res.json({name: data.name, exercise: log})
     }
   });
