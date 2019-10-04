@@ -57,13 +57,15 @@ app.post('/api/exercise/add', function(req, res){
   });
 });
 
-app.get('/api/exercise/log/:userId', function(req, res){
+app.get('/api/exercise/log?', function(req, res){
   User.findById(req.query.userId, function(err, data){
     if (err) return (err);
     if (data == null) {
       res.json({error: "User not found"});
     } else {
-      var log = data.find({exercise: $gt})
+      var log = data.exercise.filter(function (d) {
+        if (typeof req.query.)
+      });
       res.json({name: data.name, exercise: data.exercise})
     }
   });
