@@ -47,8 +47,11 @@ app.get('/api/exercise/users', function(req, res){
 });
   
 app.post('/api/exercise/add', function(req, res){
-  User.findByIdAndUpdate(req.body.userId, {exercise: [req.body.description, req.body.duration, req.body.date == undefined ? ]},function(err){
-    
+  User.findById(req.body.userId, function(err, data){
+    if (err) return "Error updating user";
+    var newExercise = {Description: req.body.description, Duration: req.body.duration, Date: (req.body.date == undefined ? new Date: req.body.date)};
+    data.exercise
+    return "Exercise added";
   })
 });
   
